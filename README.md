@@ -30,6 +30,8 @@ The following products / tools are needed to contribute / fork.
 
 ## Authors
 * Michael Schnyder
+* Christian Güdel
+* Roman Gribi
 
 ## License
 Licensed under the MIT License
