@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using DotNetBay.Core;
@@ -40,7 +41,9 @@ namespace DotNetBay.WPF
                     StartDateTimeUtc = DateTime.UtcNow.AddSeconds(10),
                     EndDateTimeUtc = DateTime.UtcNow.AddDays(14),
                     StartPrice = 72,
-                    Seller = me
+                    Seller = me,
+                    IsRunning = true,
+                    Image = File.ReadAllBytes("C:\\tmp\\img.JPG")
                 });
             }
         }

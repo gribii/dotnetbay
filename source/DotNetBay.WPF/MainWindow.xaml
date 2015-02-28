@@ -54,7 +54,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Visibility="{Binding IsRunning, Converter={StaticResource VisibilityConverter}}" Background="Green"
-                                        Content="Place" />
+                                        Content="Place" Click="ButtonBase_OnClick" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
