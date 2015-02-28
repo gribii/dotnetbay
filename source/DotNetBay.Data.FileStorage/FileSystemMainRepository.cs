@@ -1,17 +1,15 @@
 ﻿using System.IO;
-
 using Newtonsoft.Json;
 
 namespace DotNetBay.Data.FileStorage
 {
     public class FileSystemMainRepository : InMemoryMainRepository
     {
+        private readonly string binaryDataDirectory;
         // Poor-Mans locking mechanism
         private readonly string fullPath;
         private readonly JsonSerializerSettings jsonSerializerSettings;
         private readonly string rootDirectory;
-
-        private readonly string binaryDataDirectory;
 
         public FileSystemMainRepository(string fileName)
         {
@@ -72,7 +70,11 @@ namespace DotNetBay.Data.FileStorage
             // Reload Images from FS
             foreach (var auction in data.Auctions)
             {
-                auction.Image = this.LoadBinary(string.Format("auction-{0}-image1.jpg", auction.Id));
+                if (auction.ImageChanged)
+                {
+                    auction.Image = this.LoadBinary(string.Format("auction-{0}-image1.jpg", auction.Id));
+                    auction.ImageChanged = false;
+                }
             }
         }
 
@@ -84,8 +86,11 @@ namespace DotNetBay.Data.FileStorage
             // Remove byte values from images and save individually
             foreach (var auction in data.Auctions)
             {
-                this.SaveBinary(string.Format("auction-{0}-image1.jpg", auction.Id), auction.Image);
-                auction.Image = null;
+                if (auction.ImageChanged)
+                {
+                    this.SaveBinary(string.Format("auction-{0}-image1.jpg", auction.Id), auction.Image);
+                    auction.Image = null;
+                }
             }
         }
 

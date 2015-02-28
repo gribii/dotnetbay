@@ -21,16 +21,16 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Height="30" Width="Auto" Margin="10 10 0 10" Padding="5 0 5 0" HorizontalAlignment="Left">New Auction</Button>
+        <Button Name="ButtonAddAuction" Grid.Row="0" Height="30" Width="Auto" Margin="10 10 0 10" Padding="5 0 5 0" HorizontalAlignment="Left" Click="ButtonAddAuction_OnClick">New Auction</Button>
         <Grid Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 5 10 10">
-            <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Auctions}">
+            <DataGrid Name="DataGridAuctions" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Auctions}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Auction" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Height="auto" Width="auto">
                                     <Label FontWeight="Bold" Padding="0" Content="{Binding Title}" />
-                                    <Image
+                                    <Image Name="ImageAuction"
                                         Source="{Binding Image, Converter={StaticResource BinaryImageConverter}}" />
                                 </StackPanel>
                             </DataTemplate>
