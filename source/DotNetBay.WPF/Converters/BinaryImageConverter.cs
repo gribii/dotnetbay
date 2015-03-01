@@ -14,13 +14,16 @@ namespace DotNetBay.WPF.Converters
             var bytes = value as byte[];
             if (bytes != null)
             {
-                var s = new MemoryStream(bytes);
-                var img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = s;
-                img.EndInit();
-
-                return img;
+                using (var s = new MemoryStream(bytes))
+                {
+                    var img = new BitmapImage();
+                    img.BeginInit();
+                    img.StreamSource = s;
+                    img.CacheOption = BitmapCacheOption.OnLoad;
+                    img.EndInit();
+                    
+                    return img;
+                }
             }
             return null;
         }
