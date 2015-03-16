@@ -219,12 +219,17 @@ namespace DotNetBay.Test.Storage
                 allMembersFromRepo = testRepo.GetMembers().ToList();
             }
 
-            // Sanity check
             Assert.AreEqual(2, allMembersFromRepo.Count());
-            Assert.IsNotNull(allMembersFromRepo[1].Bids);
 
-            Assert.AreEqual(1, allMembersFromRepo[1].Bids.Count);
-            Assert.AreEqual(bid, allMembersFromRepo[1].Bids[0]);
+            var bidder = allMembersFromRepo.Single(m => m.Bids != null && m.Bids.Count > 0);
+            var seller = allMembersFromRepo.Single(m => m.Auctions != null && m.Auctions.Count > 0);
+
+            // Sanity check
+            Assert.IsNotNull(bidder.Bids);
+            Assert.IsNotNull(seller.Auctions);
+
+            Assert.AreEqual(1, bidder.Bids.Count);
+            Assert.AreEqual(bid, bidder.Bids[0]);
         }
 
         [TestCase]
