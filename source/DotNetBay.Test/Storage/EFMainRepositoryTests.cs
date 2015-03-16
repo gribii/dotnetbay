@@ -1,4 +1,6 @@
-﻿using DotNetBay.Data.EF;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using DotNetBay.Data.EF;
 using DotNetBay.Interfaces;
 
 namespace DotNetBay.Test.Storage
@@ -12,21 +14,19 @@ namespace DotNetBay.Test.Storage
 
         private class EFMainRepositoryFactory : IRepositoryFactory
         {
-            private readonly EFMainRepository repository;
-
-            public EFMainRepositoryFactory()
-            {
-                this.repository = new EFMainRepository();
-            }
+            private readonly IList<EFMainRepository> repositories = new List<EFMainRepository>();
 
             public void Dispose()
             {
-                this.repository.Database.Delete();
+                foreach (var repository in this.repositories) repository.Database.Delete();
             }
 
             public IMainRepository CreateMainRepository()
             {
-                return this.repository;
+                var repository = new EFMainRepository();
+                this.repositories.Add(repository);
+
+                return repository;
             }
         }
     }
