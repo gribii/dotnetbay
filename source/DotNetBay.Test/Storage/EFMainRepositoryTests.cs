@@ -2,9 +2,11 @@
 using System.Runtime.CompilerServices;
 using DotNetBay.Data.EF;
 using DotNetBay.Interfaces;
+using NUnit.Framework;
 
 namespace DotNetBay.Test.Storage
 {
+    [Category("Database")]
     public class EFMainRepositoryTests : MainRepositoryTestBase
     {
         protected override IRepositoryFactory CreateFactory()
