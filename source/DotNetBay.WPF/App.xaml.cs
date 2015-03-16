@@ -17,6 +17,10 @@ namespace DotNetBay.WPF
     {
         public App()
         {
+            // ensure reference to EF
+            // ReSharper disable once UnusedVariable
+            var ensureDllIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+
             this.MainRepository = new FileSystemMainRepository("store.json");
             this.AuctionRunner = new AuctionRunner(this.MainRepository);
             this.AuctionRunner.Start();

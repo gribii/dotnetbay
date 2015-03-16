@@ -14,6 +14,10 @@ namespace DotNetBay.Cmd
     {
         public static void Main(string[] args)
         {
+            // ensure reference to EF
+            // ReSharper disable once UnusedVariable
+            var ensureDllIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+
             Console.WriteLine("DotNetBay Commandline");
 
             var store = new FileSystemMainRepository("store.json");
