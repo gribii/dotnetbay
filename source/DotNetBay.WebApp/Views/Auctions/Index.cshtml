@@ -110,7 +110,7 @@
                 @if (!item.IsClosed)
                 {
                     @:|
-                    Html.ActionLink("Bid", "Bid", new {id = item.Id});
+                    @Html.ActionLink("Bid", "Create", "Bids", new {id = item.Id}, null);
                 }
             </td>
         </tr>
