@@ -32,6 +32,17 @@ namespace DotNetBay.WebApp.Controllers
             return View(this.mainRepository.GetAuctions().ToList());
         }
 
+        public ActionResult Image(int id)
+        {
+            var auction = this.mainRepository.GetAuctions().FirstOrDefault(a => a.Id == id);
+            if (auction != null)
+            {
+                return File(auction.Image, "image/jpeg");
+            }
+
+            return this.HttpNotFound();
+        }
+
         // GET: Auctions/Details/5
         public ActionResult Details(int id)
         {

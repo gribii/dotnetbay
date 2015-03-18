@@ -4,7 +4,7 @@
     ViewBag.Title = "Auctions";
 }
 
-<h2>Index</h2>
+<h2>Auction overview</h2>
 
 <p>
     @Html.ActionLink("New auction", "Create")
@@ -12,76 +12,108 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StartPrice)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            Status
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImageChanged)
+            @Html.DisplayNameFor(model => model.StartPrice)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CurrentPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StartDateTimeUtc)
+            Bids
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndDateTimeUtc)
+            Starts
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CloseDateTimeUtc)
+            Ends
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsClosed)
+            Seller
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsRunning)
+            Current Winner
+        </th>
+        <th>
+            Closed
+        </th>
+        <th>
+            Winner
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageChanged)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDateTimeUtc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDateTimeUtc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CloseDateTimeUtc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsClosed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsRunning)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        string color = item.IsRunning ? "#90EE90" : item.IsClosed ? "#ff4c4c" : "";
+        <tr style="background: @color">
+            <td>
+                <p style="font-weight: bold">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </p>
+                <img style="max-height: 150px" src="@Url.Action("Image", "Auctions", new {id = item.Id})"/>
+            </td>
+            <td>
+                @if (!item.IsRunning && !item.IsClosed)
+                {
+                    @:Not started
+                }
+                else if (!item.IsClosed)
+                {
+                    @:Running
+                }
+                else
+                {
+                    @:Closed
+                }
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.StartPrice)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.CurrentPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bids.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDateTimeUtc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDateTimeUtc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seller.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveBid.Bidder.DisplayName)
+            </td>
+            <td>
+                @if (item.IsClosed)
+                {
+                    Html.DisplayFor(modelItem => item.CloseDateTimeUtc);
+                }
+            </td>
+            <td>
+                @if (item.IsClosed)
+                {
+                    Html.DisplayFor(modelItem => item.Winner.DisplayName);
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new {id = item.Id})
+
+                @if (!item.IsClosed)
+                {
+                    @:|
+                    Html.ActionLink("Bid", "Bid", new {id = item.Id});
+                }
+            </td>
+        </tr>
+    }
 
 </table>

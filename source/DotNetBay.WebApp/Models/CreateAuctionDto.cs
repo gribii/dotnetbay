@@ -6,12 +6,17 @@ namespace DotNetBay.WebApp.Models
 {
     public class CreateAuctionDto
     {
+        public CreateAuctionDto()
+        {
+            this.CurrentPrice = 1;
+        }
+
         [StringLength(60, MinimumLength = 3)]
         [DisplayName("Title")]
         public string Title { get; set; }
 
         [DisplayName("Start Price")]
-        [Range(1, double.MaxValue)]
+        [Range(1, 9999999999)]
         [DataType(DataType.Currency)]
         public decimal CurrentPrice { get; set; }
 
